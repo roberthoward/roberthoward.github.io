@@ -3,99 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robert Howard - Portfolio</title>
+  <title>Robert Howard III - UX Technology Strategy Leader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    :root {
+      --primary-blue: #1e40af;
+      --secondary-blue: #3b82f6;
+      --light-blue: #dbeafe;
+      --dark-gray: #1f2937;
+      --medium-gray: #6b7280;
+      --light-gray: #f9fafb;
+      --white: #ffffff;
+      --text-dark: #111827;
+      --text-light: #6b7280;
+      --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
-      color: #333;
-      line-height: 1.6;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      color: var(--text-dark);
+      background: var(--light-gray);
+    }
+
     header {
-      background: #333;
-      color: #fff;
-      padding: 1rem 0;
+      background: var(--gradient-bg);
+      color: var(--white);
+      padding: 4rem 0 3rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    header .content {
+      position: relative;
+      z-index: 1;
+    }
+
     header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     header p {
-      margin: 0.5rem 0 0;
+      font-size: 1.3rem;
+      font-weight: 300;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
     }
+
     nav {
+      background: var(--white);
+      padding: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
-      background: #444;
-      padding: 0.5rem 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 1rem;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 2rem auto;
       padding: 0 1rem;
     }
-    .about, .portfolio, .contact {
-      margin-bottom: 2rem;
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 1.2rem 2rem;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
     }
-    .portfolio img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 1rem 0;
+
+    nav a:hover {
+      color: var(--primary-blue);
+      background: var(--light-blue);
     }
-    footer {
-      background: #333;
-      color: #fff;
-      text-align: center;
-      padding: 1rem 0;
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--primary-blue);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    nav a:hover::after {
+      width: 80%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .section-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    .section-card h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-card h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--secondary-blue);
+      border-radius: 2px;
+    }
+
+    .section-card p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
       margin-top: 2rem;
+    }
+
+    .portfolio-item {
+      background: linear-gradient(135deg, var(--light-blue) 0%, rgba(59, 130, 246, 0.1) 100%);
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(30, 64, 175, 0.1);
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.15);
+    }
+
+    .portfolio-item h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item {
+      background: var(--light-gray);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+      background: var(--light-blue);
+    }
+
+    .contact-item a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: var(--secondary-blue);
+      text-decoration: underline;
+    }
+
+    footer {
+      background: var(--dark-gray);
+      color: var(--white);
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      header p {
+        font-size: 1.1rem;
+      }
+      
+      .section-card {
+        padding: 2rem;
+      }
+      
+      nav a {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .container {
+        margin: 1.5rem auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 3rem 0 2rem;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .nav-container {
+        flex-direction: column;
+      }
+      
+      nav a {
+        padding: 0.8rem 1rem;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Robert Howard III</h1>
-    <p>Director UX Technology Strategy at Thomson Reuters</p>
+    <div class="content">
+      <h1>Robert Howard III</h1>
+      <p>Director UX Technology Strategy at Thomson Reuters</p>
+    </div>
   </header>
+  
   <nav>
-    <a href="https://www.linkedin.com/in/mrhoward" target="_blank">About</a>
-    <a href="https://www.linkedin.com/in/mrhoward" target="_blank">Portfolio</a>
-    <a href="https://www.linkedin.com/in/mrhoward" target="_blank">Contact</a>
+    <div class="nav-container">
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
   </nav>
+  
   <div class="container">
-    <section id="about" class="about">
+    <section id="about" class="section-card">
       <h2>About Me</h2>
       <p>
-        Hello! I’m Robert Howard, a seasoned Software Engineering leader at Thomson Reuters. 
+        Hello! I'm Robert Howard, a seasoned Software Engineering leader at Thomson Reuters. 
         I specialize in creating innovative user experiences that bridge the gap between technology and design.
+        With years of experience in UX technology strategy, I lead teams that deliver cutting-edge solutions 
+        for complex business challenges in the legal, tax, and news industries.
+      </p>
+      <p>
+        My passion lies in transforming how users interact with technology, ensuring that every digital 
+        experience is both powerful and intuitive. I believe in the intersection of human-centered design 
+        and robust engineering practices.
       </p>
     </section>
-    <section id="portfolio" class="portfolio">
+    
+    <section id="portfolio" class="section-card">
       <h2>Portfolio</h2>
-      <p>Here are some of the projects I’ve worked on:</p>
-      <li>ThomsonReuters.com</li>
-      <li>Tax.ThomsonReuters.com</li>
-      <li>Legal.ThomsonReuters.com</li>
+      <p>Here are some of the key projects and platforms I've worked on at Thomson Reuters:</p>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <h3>ThomsonReuters.com</h3>
+          <p>Main corporate website serving millions of users globally with comprehensive product information and resources.</p>
+        </div>
+        <div class="portfolio-item">
+          <h3>Tax.ThomsonReuters.com</h3>
+          <p>Professional tax software platform providing advanced tools for tax professionals and corporations.</p>
+        </div>
+        <div class="portfolio-item">
+          <h3>Legal.ThomsonReuters.com</h3>
+          <p>Legal technology solutions helping law firms and legal departments streamline their operations.</p>
+        </div>
+      </div>
     </section>
-    <section id="contact" class="contact">
+    
+    <section id="contact" class="section-card">
       <h2>Contact Me</h2>
-      <p>If you’d like to get in touch, feel free to reach out via email or connect on LinkedIn.</p>
-      <p>Email: <a href="mailto:rob.howard@tr.com">rob.howard@thomsonreuters.com/a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/mrhoward" target="_blank">linkedin.com/in/mrhoward</a></p>
+      <p>If you'd like to get in touch, feel free to reach out via email or connect on LinkedIn. I'm always interested in discussing UX technology, innovation, and opportunities for collaboration.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <strong>Email</strong><br>
+          <a href="mailto:rob.howard@tr.com">rob.howard@tr.com</a>
+        </div>
+        <div class="contact-item">
+          <strong>LinkedIn</strong><br>
+          <a href="https://www.linkedin.com/in/mrhoward" target="_blank">linkedin.com/in/mrhoward</a>
+        </div>
+      </div>
     </section>
   </div>
+  
   <footer>
     <p>&copy; 2025 Robert Howard III. All Rights Reserved.</p>
   </footer>
