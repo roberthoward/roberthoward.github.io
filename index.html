@@ -13,7 +13,7 @@
       --success: #10b981;
       --destructive: #ef4444;
       
-      /* Semantic Colors */
+      /* Light Theme Colors */
       --background: #ffffff;
       --foreground: #111827;
       --muted: #f9fafb;
@@ -24,6 +24,21 @@
       --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] {
+      /* Dark Theme Colors */
+      --background: #0f172a;
+      --foreground: #f1f5f9;
+      --muted: #1e293b;
+      --accent: #1e40af;
+      --border: #334155;
+      --secondary: #94a3b8;
+      
+      /* Dark theme gradients and shadows */
+      --gradient-bg: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -37,6 +52,70 @@
       line-height: 1.7;
       color: var(--foreground);
       background: var(--muted);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--card-shadow);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Flower Decorations */
+    .flower-decoration {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .flower-decoration.top-left {
+      top: 20px;
+      left: 20px;
+      transform: rotate(-15deg);
+    }
+
+    .flower-decoration.top-right {
+      top: 50px;
+      right: 100px;
+      transform: rotate(25deg);
+    }
+
+    .flower-decoration.bottom-left {
+      bottom: 100px;
+      left: 50px;
+      transform: rotate(10deg);
+    }
+
+    .flower-decoration.bottom-right {
+      bottom: 150px;
+      right: 30px;
+      transform: rotate(-20deg);
+    }
+
+    [data-theme="dark"] .flower-decoration {
+      opacity: 0.4;
+      filter: brightness(0.8) saturate(1.2);
     }
 
     header {
@@ -46,6 +125,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
     }
 
     header::before {
@@ -57,6 +137,25 @@
       bottom: 0;
       background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
       opacity: 0.3;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      animation: float 20s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
     }
 
     header .content {
@@ -86,6 +185,8 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-container {
@@ -104,11 +205,14 @@
       font-size: 1rem;
       transition: all 0.3s ease;
       position: relative;
+      border-radius: 8px;
+      margin: 0.5rem;
     }
 
     nav a:hover {
       color: var(--primary);
       background: var(--accent);
+      transform: translateY(-2px);
     }
 
     nav a::after {
@@ -121,6 +225,7 @@
       background: var(--primary);
       transition: all 0.3s ease;
       transform: translateX(-50%);
+      border-radius: 2px;
     }
 
     nav a:hover::after {
@@ -142,10 +247,39 @@
       box-shadow: var(--card-shadow);
       transition: all 0.3s ease;
       border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--primary), var(--accent), var(--success), var(--primary));
+      background-size: 400% 400%;
+      border-radius: 18px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+      animation: gradient-border 8s ease infinite;
+    }
+
+    .section-card:hover::before {
+      opacity: 0.5;
+    }
+
+    @keyframes gradient-border {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .section-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
       box-shadow: var(--hover-shadow);
     }
 
@@ -188,11 +322,29 @@
       border-radius: 12px;
       transition: all 0.3s ease;
       border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .portfolio-item:hover::before {
+      left: 100%;
     }
 
     .portfolio-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.2);
+      border-color: var(--primary);
     }
 
     .portfolio-item h3 {
@@ -200,6 +352,11 @@
       font-weight: 600;
       color: var(--primary);
       margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .portfolio-item:hover h3 {
+      color: var(--secondary);
     }
 
     .contact-info {
@@ -215,10 +372,38 @@
       border-radius: 12px;
       text-align: center;
       transition: all 0.3s ease;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+
+    .contact-item:hover::before {
+      opacity: 0.1;
     }
 
     .contact-item:hover {
       background: var(--accent);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+    }
+
+    .contact-item strong,
+    .contact-item a {
+      position: relative;
+      z-index: 1;
     }
 
     .contact-item a {
@@ -231,6 +416,7 @@
     .contact-item a:hover {
       color: var(--secondary);
       text-decoration: underline;
+      text-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
     }
 
     footer {
@@ -247,6 +433,18 @@
     }
 
     @media (max-width: 768px) {
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+
+      .flower-decoration {
+        display: none; /* Hide flowers on mobile for better performance */
+      }
+
       header h1 {
         font-size: 1.5rem;
       }
@@ -262,6 +460,7 @@
       nav a {
         padding: 1rem 1.5rem;
         font-size: 0.875rem;
+        margin: 0.25rem;
       }
       
       .container {
@@ -270,6 +469,14 @@
     }
 
     @media (max-width: 480px) {
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+
       header {
         padding: 3rem 0 2rem;
       }
@@ -287,14 +494,105 @@
       }
       
       nav a {
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 1rem;
         text-align: center;
         font-size: 0.75rem;
+        margin: 0.125rem;
       }
+    }
+
+    /* Additional modern CSS effects */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .theme-toggle:active {
+      animation: pulse 0.3s ease;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200px 0; }
+      100% { background-position: calc(200px + 100%) 0; }
+    }
+
+    .section-card h2::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
     }
   </style>
 </head>
 <body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <span id="theme-icon">🌙</span>
+  </button>
+
+  <!-- Flower Decorations -->
+  <div class="flower-decoration top-left">
+    <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke-width="2">
+        <circle cx="30" cy="30" r="8" fill="#FF6B9D" stroke="#FF1744"/>
+        <circle cx="30" cy="18" r="6" fill="#FF8A80" stroke="#FF5722"/>
+        <circle cx="42" cy="30" r="6" fill="#FF8A80" stroke="#FF5722"/>
+        <circle cx="30" cy="42" r="6" fill="#FF8A80" stroke="#FF5722"/>
+        <circle cx="18" cy="30" r="6" fill="#FF8A80" stroke="#FF5722"/>
+        <circle cx="24" cy="24" r="4" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="36" cy="24" r="4" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="36" cy="36" r="4" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="24" cy="36" r="4" fill="#FFB74D" stroke="#FF9800"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="flower-decoration top-right">
+    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke-width="1.5">
+        <circle cx="25" cy="25" r="6" fill="#E1BEE7" stroke="#9C27B0"/>
+        <circle cx="25" cy="15" r="5" fill="#F8BBD9" stroke="#E91E63"/>
+        <circle cx="35" cy="25" r="5" fill="#F8BBD9" stroke="#E91E63"/>
+        <circle cx="25" cy="35" r="5" fill="#F8BBD9" stroke="#E91E63"/>
+        <circle cx="15" cy="25" r="5" fill="#F8BBD9" stroke="#E91E63"/>
+        <circle cx="25" cy="25" r="3" fill="#FFF59D" stroke="#FFC107"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="flower-decoration bottom-left">
+    <svg width="55" height="55" viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke-width="2">
+        <circle cx="27.5" cy="27.5" r="7" fill="#81C784" stroke="#4CAF50"/>
+        <circle cx="27.5" cy="17" r="5" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="38" cy="27.5" r="5" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="27.5" cy="38" r="5" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="17" cy="27.5" r="5" fill="#FFB74D" stroke="#FF9800"/>
+        <circle cx="21" cy="21" r="3" fill="#F48FB1" stroke="#E91E63"/>
+        <circle cx="34" cy="21" r="3" fill="#F48FB1" stroke="#E91E63"/>
+        <circle cx="34" cy="34" r="3" fill="#F48FB1" stroke="#E91E63"/>
+        <circle cx="21" cy="34" r="3" fill="#F48FB1" stroke="#E91E63"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="flower-decoration bottom-right">
+    <svg width="45" height="45" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke-width="1.5">
+        <circle cx="22.5" cy="22.5" r="5" fill="#90CAF9" stroke="#2196F3"/>
+        <circle cx="22.5" cy="14" r="4" fill="#C5E1A5" stroke="#8BC34A"/>
+        <circle cx="31" cy="22.5" r="4" fill="#C5E1A5" stroke="#8BC34A"/>
+        <circle cx="22.5" cy="31" r="4" fill="#C5E1A5" stroke="#8BC34A"/>
+        <circle cx="14" cy="22.5" r="4" fill="#C5E1A5" stroke="#8BC34A"/>
+        <circle cx="22.5" cy="22.5" r="2" fill="#FFCDD2" stroke="#F44336"/>
+      </g>
+    </svg>
+  </div>
+
   <header>
     <div class="content">
       <h1>Robert Howard III</h1>
@@ -364,5 +662,70 @@
   <footer>
     <p>&copy; 2025 Robert Howard III. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      const currentTheme = body.getAttribute('data-theme');
+      
+      if (currentTheme === 'dark') {
+        body.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Initialize theme from localStorage
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const themeIcon = document.getElementById('theme-icon');
+      
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+      } else {
+        themeIcon.textContent = '🌙';
+      }
+    }
+
+    // Smooth scroll for navigation links
+    function smoothScroll() {
+      const links = document.querySelectorAll('nav a[href^="#"]');
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    }
+
+    // Add floating animation to flower decorations
+    function animateFlowers() {
+      const flowers = document.querySelectorAll('.flower-decoration');
+      flowers.forEach((flower, index) => {
+        flower.style.animation = `float ${3 + index}s ease-in-out infinite`;
+        flower.style.animationDelay = `${index * 0.5}s`;
+      });
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeTheme();
+      smoothScroll();
+      animateFlowers();
+    });
+  </script>
 </body>
 </html>
